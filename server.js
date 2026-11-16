@@ -17,7 +17,7 @@ const WEBSITE_URL = "https://node-base.base44.app";
 // Actual Express backend address
 const PUBLIC_URL = (
   process.env.PUBLIC_URL ||
-  "https://https://node-base.base44.app"
+  "https://node-base.base44.app"
 ).replace(/\/+$/, "");
 
 const NETWORK_SECRET = process.env.NETWORK_SECRET || "";
