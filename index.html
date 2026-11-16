@@ -1,0 +1,715 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d18">
+
+<title>FriendCodeForum - Decentralized Network</title>
+
+<style>
+:root {
+  --bg: #080d18;
+  --panel: #111b2c;
+  --panel2: #0c1525;
+  --border: #253650;
+  --blue: #4385ff;
+  --green: #32d99a;
+  --red: #ff6478;
+  --text: #edf3ff;
+  --muted: #91a2bb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, Arial, sans-serif;
+  min-height: 100vh;
+}
+
+header {
+  background: #0d1728;
+  border-bottom: 1px solid var(--border);
+  padding: 18px 5%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+nav {
+  max-width: 1150px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.brand {
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.brand span {
+  color: var(--blue);
+}
+
+.nav-status {
+  font-size: 13px;
+  color: var(--green);
+}
+
+main {
+  max-width: 1150px;
+  margin: 30px auto;
+  padding: 0 18px;
+}
+
+.hero {
+  padding: 32px;
+  background: linear-gradient(135deg, #142744, #101a2d);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(27px, 5vw, 40px);
+  margin: 0 0 10px;
+}
+
+.hero p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.pill {
+  display: inline-block;
+  padding: 6px 11px;
+  border-radius: 30px;
+  font-size: 12px;
+  background: #153c34;
+  color: var(--green);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 21px;
+  margin-bottom: 18px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.stat {
+  font-size: 29px;
+  font-weight: 800;
+  margin-top: 13px;
+  overflow-wrap: anywhere;
+}
+
+.green {
+  color: var(--green);
+}
+
+.red {
+  color: var(--red);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+button {
+  background: var(--blue);
+  color: white;
+  border: none;
+  padding: 11px 17px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+button:hover {
+  background: #6198ff;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 13px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: white;
+  font: inherit;
+  margin: 8px 0 14px;
+  outline: none;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--blue);
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.peer, .post {
+  padding: 17px 0;
+  border-top: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+
+.peer-url {
+  color: var(--blue);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.post-content {
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.post-meta {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 9px;
+}
+
+.empty {
+  padding: 22px 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.network-info {
+  background: var(--panel2);
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  overflow-wrap: anywhere;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 15px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.toast {
+  padding: 12px;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: none;
+  background: #153c34;
+  color: var(--green);
+}
+
+.toast.error {
+  background: #401d29;
+  color: var(--red);
+}
+
+@media(max-width: 800px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width: 500px) {
+  header {
+    padding: 15px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .stat {
+    font-size: 23px;
+  }
+
+  .hero {
+    padding: 23px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <div class="brand">🌐 FriendCode<span>Forum</span></div>
+    <div id="navStatus" class="nav-status">● CONNECTING</div>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <span class="pill">INDEPENDENT NETWORK NODE</span>
+
+  <h1>Welcome to FriendCodeForum</h1>
+
+  <p>
+    A decentralized community network where independent
+    nodes connect, synchronize information and bring
+    communities together.
+  </p>
+
+  <div class="network-info">
+    <strong>Network connection</strong>
+    <p id="connection" class="muted">
+      Connecting to FriendCodeForum...
+    </p>
+
+    <small class="muted" id="nodeId">
+      Node ID: Loading...
+    </small>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+
+<div class="grid">
+
+  <section class="card">
+    <div class="stat-label">NODE STATUS</div>
+    <div id="nodeStatus" class="stat">--</div>
+  </section>
+
+  <section class="card">
+    <div class="stat-label">UPTIME</div>
+    <div id="uptime" class="stat">--</div>
+  </section>
+
+  <section class="card">
+    <div class="stat-label">CONNECTED PEERS</div>
+    <div id="peerCount" class="stat">--</div>
+  </section>
+
+  <section class="card">
+    <div class="stat-label">TOTAL POSTS</div>
+    <div id="postCount" class="stat">--</div>
+  </section>
+
+</div>
+
+<!-- NODE INFORMATION -->
+
+<section class="card">
+
+  <div class="section-title">
+    <h2>🖥️ Node Information</h2>
+    <button id="refreshButton" onclick="refreshAll()">
+      ↻ Refresh
+    </button>
+  </div>
+
+  <p class="muted">
+    Node version: <strong id="version">--</strong>
+  </p>
+
+  <p class="muted">
+    Network authentication:
+    <strong id="authentication">--</strong>
+  </p>
+
+  <p class="muted">
+    Node address:
+    <strong id="nodeAddress">--</strong>
+  </p>
+
+  <p class="muted">
+    Last updated:
+    <strong id="updated">--</strong>
+  </p>
+
+</section>
+
+<!-- NETWORK PEERS -->
+
+<section class="card">
+
+  <h2>🌍 Network Peers</h2>
+
+  <p class="muted">
+    Independent FriendCodeForum nodes registered
+    in the decentralized network.
+  </p>
+
+  <div id="peerList">
+    <div class="empty">Loading network peers...</div>
+  </div>
+
+</section>
+
+<!-- COMMUNITY FORUM -->
+
+<section class="card">
+
+  <h2>💬 Community Forum</h2>
+
+  <p class="muted">
+    Share updates and communicate with the FriendCodeForum
+    community.
+  </p>
+
+  <div id="postMessage" class="toast"></div>
+
+  <form id="postForm">
+
+    <label for="author">Your username</label>
+
+    <input
+      id="author"
+      type="text"
+      maxlength="100"
+      placeholder="Enter your username"
+      required
+    >
+
+    <label for="content">Your message</label>
+
+    <textarea
+      id="content"
+      maxlength="5000"
+      placeholder="What's happening in the network?"
+      required
+    ></textarea>
+
+    <button id="publishButton" type="submit">
+      Publish Post
+    </button>
+
+  </form>
+
+</section>
+
+<section class="card">
+
+  <div class="section-title">
+    <h2>📰 Community Posts</h2>
+    <span class="pill">LIVE FEED</span>
+  </div>
+
+  <div id="posts">
+    <div class="empty">Loading community posts...</div>
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  <strong>FriendCodeForum Decentralized Network</strong>
+  <p>Independent nodes • Distributed posts • Open community</p>
+  <p>Powered by FriendCodeForum Node 3.0</p>
+</footer>
+
+<script>
+
+// API CONNECTION
+const API = "https://friendcodeforum-node.onrender.com";
+
+let refreshing = false;
+
+function el(id) {
+  return document.getElementById(id);
+}
+
+async function apiFetch(endpoint, options = {}) {
+  const response = await fetch(API + endpoint, {
+    ...options,
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    }
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.error || `Server error ${response.status}`);
+  }
+
+  return data;
+}
+
+// FORMAT UPTIME
+function formatTime(seconds) {
+  const days = Math.floor(seconds / 86400);
+  const hours = Math.floor((seconds % 86400) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  return `${days}d ${hours}h ${minutes}m`;
+}
+
+// FORMAT DATE
+function formatDate(date) {
+  const parsed = new Date(date);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return "Unknown date";
+  }
+
+  return parsed.toLocaleString();
+}
+
+// DISPLAY STATUS
+async function loadStatus() {
+  const data = await apiFetch("/api/status");
+
+  el("navStatus").textContent = "● ONLINE";
+  el("navStatus").className = "nav-status green";
+
+  el("nodeStatus").textContent = "Online";
+  el("nodeStatus").className = "stat green";
+
+  el("nodeId").textContent = "Node ID: " + data.id;
+
+  el("uptime").textContent = formatTime(data.uptime);
+
+  el("peerCount").textContent = data.peers;
+
+  el("postCount").textContent = data.posts;
+
+  el("version").textContent = data.version;
+
+  el("authentication").textContent =
+    data.networkAuthenticated ? "Enabled" : "Not configured";
+
+  el("nodeAddress").textContent = data.url || API;
+
+  el("connection").textContent =
+    "Successfully connected to your FriendCodeForum node.";
+
+  el("updated").textContent = new Date().toLocaleTimeString();
+}
+
+// DISPLAY PEERS
+async function loadPeers() {
+  const data = await apiFetch("/api/peers");
+
+  const list = el("peerList");
+  list.replaceChildren();
+
+  if (!data.peers.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "No network peers registered yet.";
+    list.appendChild(empty);
+    return;
+  }
+
+  data.peers.forEach(peer => {
+    const item = document.createElement("div");
+    item.className = "peer";
+
+    const name = document.createElement("strong");
+    name.textContent = peer.name;
+
+    const url = document.createElement("p");
+    url.className = "peer-url";
+    url.textContent = peer.url;
+
+    const id = document.createElement("small");
+    id.className = "post-meta";
+    id.textContent = "Peer ID: " + peer.id;
+
+    item.append(name, url, id);
+    list.appendChild(item);
+  });
+}
+
+// DISPLAY POSTS
+async function loadPosts() {
+  const data = await apiFetch("/api/posts");
+
+  const container = el("posts");
+  container.replaceChildren();
+
+  if (!data.posts.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "No community posts yet. Be the first to publish!";
+    container.appendChild(empty);
+    return;
+  }
+
+  const posts = [...data.posts].reverse();
+
+  posts.forEach(post => {
+    const item = document.createElement("article");
+    item.className = "post";
+
+    const author = document.createElement("strong");
+    author.textContent = post.author;
+
+    const content = document.createElement("p");
+    content.className = "post-content";
+    content.textContent = post.content;
+
+    const meta = document.createElement("div");
+    meta.className = "post-meta";
+    meta.textContent =
+      formatDate(post.createdAt) +
+      " • Node: " + post.originNode;
+
+    item.append(author, content, meta);
+    container.appendChild(item);
+  });
+}
+
+// NOTIFICATION
+function showMessage(message, error = false) {
+  const box = el("postMessage");
+
+  box.textContent = message;
+  box.className = error ? "toast error" : "toast";
+  box.style.display = "block";
+}
+
+// PUBLISH POST
+el("postForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const author = el("author").value.trim();
+  const content = el("content").value.trim();
+  const button = el("publishButton");
+
+  if (!author || !content) {
+    showMessage("Please enter your username and message.", true);
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Publishing...";
+
+  try {
+    await apiFetch("/api/posts", {
+      method: "POST",
+      body: JSON.stringify({
+        author,
+        content
+      })
+    });
+
+    el("content").value = "";
+
+    showMessage("Your post was successfully published!");
+
+    await Promise.all([
+      loadPosts(),
+      loadStatus()
+    ]);
+
+  } catch (error) {
+    showMessage("Could not publish: " + error.message, true);
+
+  } finally {
+    button.disabled = false;
+    button.textContent = "Publish Post";
+  }
+});
+
+// REFRESH EVERYTHING
+async function refreshAll() {
+  if (refreshing) return;
+
+  refreshing = true;
+
+  const button = el("refreshButton");
+  button.disabled = true;
+
+  try {
+    await apiFetch("/api/health");
+
+    await Promise.all([
+      loadStatus(),
+      loadPeers(),
+      loadPosts()
+    ]);
+
+  } catch (error) {
+    el("navStatus").textContent = "● OFFLINE";
+    el("navStatus").className = "nav-status red";
+
+    el("nodeStatus").textContent = "Offline";
+    el("nodeStatus").className = "stat red";
+
+    el("connection").textContent =
+      "Connection failed: " + error.message;
+
+  } finally {
+    refreshing = false;
+    button.disabled = false;
+  }
+}
+
+// INITIAL CONNECTION
+refreshAll();
+
+// AUTOMATIC REFRESH EVERY 15 SECONDS
+setInterval(refreshAll, 15000);
+
+</script>
+
+</body>
+</html>
