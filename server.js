@@ -1,4 +1,3 @@
-
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
@@ -12,13 +11,20 @@ const PEERS_FILE = path.join(DATA_DIR, "peers.json");
 const POSTS_FILE = path.join(DATA_DIR, "posts.json");
 const NODE_ID_FILE = path.join(DATA_DIR, "node-id");
 
-const NETWORK_SECRET = process.env.NETWORK_SECRET || "";
-const PUBLIC_URL = (process.env.PUBLIC_URL || "").replace(/\/+$/, "");
+// Official frontend website
+const WEBSITE_URL = "https://node-base.base44.app";
 
-const ALLOWED_ORIGINS = (
-  process.env.ALLOWED_ORIGINS ||
+// Actual Express backend address
+const PUBLIC_URL = (
+  process.env.PUBLIC_URL ||
+  "https://friendcodeforum-node.onrender.com"
+).replace(/\/+$/, "");
+
+const NETWORK_SECRET = process.env.NETWORK_SECRET || "";
+
+const ALLOWED_ORIGINS = [
   "https://node-base.base44.app"
-).split(",").map(origin => origin.trim().replace(/\/+$/, ""));
+];
 
 const MAX_POSTS = 10000;
 const MAX_PEERS = 100;
