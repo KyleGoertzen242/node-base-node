@@ -17,13 +17,13 @@ const WEBSITE_URL = "https://node-base.base44.app";
 // Actual Express backend address
 const PUBLIC_URL = (
   process.env.PUBLIC_URL ||
-  "https://node-base.base44.app"
+  "https://kylegoertzen242.github.io/node-base-node"
 ).replace(/\/+$/, "");
 
 const NETWORK_SECRET = process.env.NETWORK_SECRET || "";
 
 const ALLOWED_ORIGINS = [
-  "https://node-base.base44.app"
+  "https://kylegoertzen242.github.io/node-base-node"
 ];
 
 const MAX_POSTS = 10000;
