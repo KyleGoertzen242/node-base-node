@@ -6,7 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080d18">
 
-<title>FriendCodeForum - Decentralized Network</title>
+<title>KYC - Decentralized Network</title>
+
+<meta name="description" content="FriendCodeForum decentralized network node dashboard. Monitor network status, connected nodes and peer connections.">
+
+<link rel="canonical" href="https://node-base.base44.app/">
 
 <style>
 :root {
@@ -81,7 +85,7 @@ main {
 
 .hero h1 {
   font-size: clamp(27px, 5vw, 40px);
-  margin: 0 0 10px;
+  margin: 12px 0 10px;
 }
 
 .hero p {
@@ -100,7 +104,7 @@ main {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
   margin-bottom: 20px;
 }
@@ -127,21 +131,10 @@ main {
   overflow-wrap: anywhere;
 }
 
-.green {
-  color: var(--green);
-}
-
-.red {
-  color: var(--red);
-}
-
-.blue {
-  color: var(--blue);
-}
-
-.muted {
-  color: var(--muted);
-}
+.green { color: var(--green); }
+.red { color: var(--red); }
+.blue { color: var(--blue); }
+.muted { color: var(--muted); }
 
 .section-title {
   display: flex;
@@ -153,10 +146,6 @@ main {
 
 h2 {
   font-size: 20px;
-}
-
-h3 {
-  margin-top: 0;
 }
 
 button {
@@ -179,28 +168,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
-input, textarea {
-  width: 100%;
-  padding: 13px;
-  background: var(--panel2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: white;
-  font: inherit;
-  margin: 8px 0 14px;
-  outline: none;
-}
-
-input:focus, textarea:focus {
-  border-color: var(--blue);
-}
-
-textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-.peer, .post {
+.peer {
   padding: 17px 0;
   border-top: 1px solid var(--border);
   overflow-wrap: anywhere;
@@ -212,16 +180,9 @@ textarea {
   overflow-wrap: anywhere;
 }
 
-.post-content {
-  line-height: 1.7;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
-.post-meta {
+.peer-id {
   font-size: 12px;
   color: var(--muted);
-  margin-top: 9px;
 }
 
 .empty {
@@ -245,20 +206,6 @@ footer {
   font-size: 12px;
 }
 
-.toast {
-  padding: 12px;
-  border-radius: 8px;
-  margin: 10px 0;
-  display: none;
-  background: #153c34;
-  color: var(--green);
-}
-
-.toast.error {
-  background: #401d29;
-  color: var(--red);
-}
-
 @media(max-width: 800px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
@@ -266,26 +213,16 @@ footer {
 }
 
 @media(max-width: 500px) {
-  header {
-    padding: 15px;
-  }
+  header { padding: 15px; }
 
   .grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 9px;
   }
 
-  .card {
-    padding: 16px;
-  }
-
-  .stat {
-    font-size: 23px;
-  }
-
-  .hero {
-    padding: 23px;
-  }
+  .card { padding: 16px; }
+  .stat { font-size: 23px; }
+  .hero { padding: 23px; }
 }
 </style>
 </head>
@@ -302,6 +239,7 @@ footer {
 <main>
 
 <section class="hero">
+
   <span class="pill">INDEPENDENT NETWORK NODE</span>
 
   <h1>Welcome to FriendCodeForum</h1>
@@ -313,18 +251,22 @@ footer {
   </p>
 
   <div class="network-info">
+
     <strong>Network connection</strong>
+
     <p id="connection" class="muted">
-      Connecting to FriendCodeForum...
+      Connecting to the FriendCodeForum network...
     </p>
 
     <small class="muted" id="nodeId">
       Node ID: Loading...
     </small>
+
   </div>
+
 </section>
 
-<!-- DASHBOARD -->
+<!-- NETWORK DASHBOARD -->
 
 <div class="grid">
 
@@ -343,11 +285,6 @@ footer {
     <div id="peerCount" class="stat">--</div>
   </section>
 
-  <section class="card">
-    <div class="stat-label">TOTAL POSTS</div>
-    <div id="postCount" class="stat">--</div>
-  </section>
-
 </div>
 
 <!-- NODE INFORMATION -->
@@ -356,13 +293,15 @@ footer {
 
   <div class="section-title">
     <h2>🖥️ Node Information</h2>
+
     <button id="refreshButton" onclick="refreshAll()">
       ↻ Refresh
     </button>
   </div>
 
   <p class="muted">
-    Node version: <strong id="version">--</strong>
+    Node version:
+    <strong id="version">--</strong>
   </p>
 
   <p class="muted">
@@ -373,6 +312,18 @@ footer {
   <p class="muted">
     Node address:
     <strong id="nodeAddress">--</strong>
+  </p>
+
+  <p class="muted">
+    Official website:
+    <strong>
+      <a
+        href="https://node-base.base44.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="color:var(--blue)"
+      >node-base.base44.app</a>
+    </strong>
   </p>
 
   <p class="muted">
@@ -399,57 +350,35 @@ footer {
 
 </section>
 
-<!-- COMMUNITY FORUM -->
+<!-- NETWORK INFORMATION -->
 
 <section class="card">
 
-  <h2>💬 Community Forum</h2>
+  <h2>🌐 About the Network</h2>
 
   <p class="muted">
-    Share updates and communicate with the FriendCodeForum
-    community.
+    FriendCodeForum is designed to support a decentralized
+    network of independently operated nodes.
   </p>
 
-  <div id="postMessage" class="toast"></div>
+  <p class="muted">
+    Each registered node can communicate with other
+    network participants and synchronize information.
+  </p>
 
-  <form id="postForm">
+  <div class="network-info">
+    <strong>Official Network Website</strong>
 
-    <label for="author">Your username</label>
-
-    <input
-      id="author"
-      type="text"
-      maxlength="100"
-      placeholder="Enter your username"
-      required
-    >
-
-    <label for="content">Your message</label>
-
-    <textarea
-      id="content"
-      maxlength="5000"
-      placeholder="What's happening in the network?"
-      required
-    ></textarea>
-
-    <button id="publishButton" type="submit">
-      Publish Post
-    </button>
-
-  </form>
-
-</section>
-
-<section class="card">
-
-  <div class="section-title">
-    <h2>📰 Community Posts</h2>
-    <span class="pill">LIVE FEED</span>
-  </div>
-
-  <div id="posts">
-    <div class="empty">Loading community posts...</div>
+    <p>
+      <a
+        href="https://node-base.base44.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="color:var(--blue)"
+      >
+        https://node-base.base44.app/
+      </a>
+    </p>
   </div>
 
 </section>
@@ -458,13 +387,16 @@ footer {
 
 <footer>
   <strong>FriendCodeForum Decentralized Network</strong>
-  <p>Independent nodes • Distributed posts • Open community</p>
+  <p>Independent nodes • Distributed network • Open community</p>
+  <p>Official Website: node-base.base44.app</p>
   <p>Powered by FriendCodeForum Node 3.0</p>
 </footer>
 
 <script>
 
 // API CONNECTION
+// This is the Express backend, not the Base44 frontend.
+
 const API = "https://friendcodeforum-node.onrender.com";
 
 let refreshing = false;
@@ -473,20 +405,23 @@ function el(id) {
   return document.getElementById(id);
 }
 
-async function apiFetch(endpoint, options = {}) {
+// API REQUEST
+async function apiFetch(endpoint) {
+
   const response = await fetch(API + endpoint, {
-    ...options,
+    method: "GET",
     cache: "no-store",
     headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {})
+      "Accept": "application/json"
     }
   });
 
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    throw new Error(data.error || `Server error ${response.status}`);
+    throw new Error(
+      data.error || `Server error ${response.status}`
+    );
   }
 
   return data;
@@ -494,26 +429,23 @@ async function apiFetch(endpoint, options = {}) {
 
 // FORMAT UPTIME
 function formatTime(seconds) {
+
   const days = Math.floor(seconds / 86400);
-  const hours = Math.floor((seconds % 86400) / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
+
+  const hours = Math.floor(
+    (seconds % 86400) / 3600
+  );
+
+  const minutes = Math.floor(
+    (seconds % 3600) / 60
+  );
 
   return `${days}d ${hours}h ${minutes}m`;
 }
 
-// FORMAT DATE
-function formatDate(date) {
-  const parsed = new Date(date);
-
-  if (Number.isNaN(parsed.getTime())) {
-    return "Unknown date";
-  }
-
-  return parsed.toLocaleString();
-}
-
-// DISPLAY STATUS
+// DISPLAY NODE STATUS
 async function loadStatus() {
+
   const data = await apiFetch("/api/status");
 
   el("navStatus").textContent = "● ONLINE";
@@ -522,184 +454,124 @@ async function loadStatus() {
   el("nodeStatus").textContent = "Online";
   el("nodeStatus").className = "stat green";
 
-  el("nodeId").textContent = "Node ID: " + data.id;
+  el("nodeId").textContent =
+    "Node ID: " + data.id;
 
-  el("uptime").textContent = formatTime(data.uptime);
+  el("uptime").textContent =
+    formatTime(data.uptime);
 
-  el("peerCount").textContent = data.peers;
+  el("peerCount").textContent =
+    data.peers;
 
-  el("postCount").textContent = data.posts;
-
-  el("version").textContent = data.version;
+  el("version").textContent =
+    data.version;
 
   el("authentication").textContent =
-    data.networkAuthenticated ? "Enabled" : "Not configured";
+    data.networkAuthenticated
+      ? "Enabled"
+      : "Not configured";
 
-  el("nodeAddress").textContent = data.url || API;
+  el("nodeAddress").textContent =
+    data.url || API;
 
   el("connection").textContent =
-    "Successfully connected to your FriendCodeForum node.";
+    "Successfully connected to the FriendCodeForum network.";
 
-  el("updated").textContent = new Date().toLocaleTimeString();
+  el("updated").textContent =
+    new Date().toLocaleTimeString();
 }
 
-// DISPLAY PEERS
+// DISPLAY NETWORK PEERS
 async function loadPeers() {
+
   const data = await apiFetch("/api/peers");
 
   const list = el("peerList");
+
   list.replaceChildren();
 
-  if (!data.peers.length) {
+  if (!data.peers || !data.peers.length) {
+
     const empty = document.createElement("div");
+
     empty.className = "empty";
-    empty.textContent = "No network peers registered yet.";
+
+    empty.textContent =
+      "No network peers registered yet.";
+
     list.appendChild(empty);
+
     return;
   }
 
   data.peers.forEach(peer => {
+
     const item = document.createElement("div");
+
     item.className = "peer";
 
     const name = document.createElement("strong");
+
     name.textContent = peer.name;
 
     const url = document.createElement("p");
+
     url.className = "peer-url";
+
     url.textContent = peer.url;
 
     const id = document.createElement("small");
-    id.className = "post-meta";
+
+    id.className = "peer-id";
+
     id.textContent = "Peer ID: " + peer.id;
 
     item.append(name, url, id);
+
     list.appendChild(item);
+
   });
 }
 
-// DISPLAY POSTS
-async function loadPosts() {
-  const data = await apiFetch("/api/posts");
-
-  const container = el("posts");
-  container.replaceChildren();
-
-  if (!data.posts.length) {
-    const empty = document.createElement("div");
-    empty.className = "empty";
-    empty.textContent = "No community posts yet. Be the first to publish!";
-    container.appendChild(empty);
-    return;
-  }
-
-  const posts = [...data.posts].reverse();
-
-  posts.forEach(post => {
-    const item = document.createElement("article");
-    item.className = "post";
-
-    const author = document.createElement("strong");
-    author.textContent = post.author;
-
-    const content = document.createElement("p");
-    content.className = "post-content";
-    content.textContent = post.content;
-
-    const meta = document.createElement("div");
-    meta.className = "post-meta";
-    meta.textContent =
-      formatDate(post.createdAt) +
-      " • Node: " + post.originNode;
-
-    item.append(author, content, meta);
-    container.appendChild(item);
-  });
-}
-
-// NOTIFICATION
-function showMessage(message, error = false) {
-  const box = el("postMessage");
-
-  box.textContent = message;
-  box.className = error ? "toast error" : "toast";
-  box.style.display = "block";
-}
-
-// PUBLISH POST
-el("postForm").addEventListener("submit", async event => {
-  event.preventDefault();
-
-  const author = el("author").value.trim();
-  const content = el("content").value.trim();
-  const button = el("publishButton");
-
-  if (!author || !content) {
-    showMessage("Please enter your username and message.", true);
-    return;
-  }
-
-  button.disabled = true;
-  button.textContent = "Publishing...";
-
-  try {
-    await apiFetch("/api/posts", {
-      method: "POST",
-      body: JSON.stringify({
-        author,
-        content
-      })
-    });
-
-    el("content").value = "";
-
-    showMessage("Your post was successfully published!");
-
-    await Promise.all([
-      loadPosts(),
-      loadStatus()
-    ]);
-
-  } catch (error) {
-    showMessage("Could not publish: " + error.message, true);
-
-  } finally {
-    button.disabled = false;
-    button.textContent = "Publish Post";
-  }
-});
-
-// REFRESH EVERYTHING
+// REFRESH DASHBOARD
 async function refreshAll() {
+
   if (refreshing) return;
 
   refreshing = true;
 
   const button = el("refreshButton");
+
   button.disabled = true;
 
   try {
+
     await apiFetch("/api/health");
 
     await Promise.all([
       loadStatus(),
-      loadPeers(),
-      loadPosts()
+      loadPeers()
     ]);
 
   } catch (error) {
+
     el("navStatus").textContent = "● OFFLINE";
+
     el("navStatus").className = "nav-status red";
 
     el("nodeStatus").textContent = "Offline";
+
     el("nodeStatus").className = "stat red";
 
     el("connection").textContent =
       "Connection failed: " + error.message;
 
   } finally {
+
     refreshing = false;
+
     button.disabled = false;
+
   }
 }
 
